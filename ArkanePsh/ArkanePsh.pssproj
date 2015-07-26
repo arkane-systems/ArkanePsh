@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ArkanePsh.psd1" />
     <Compile Include="ArkanePsh.psm1" />
+    <Compile Include="InitVariables.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />

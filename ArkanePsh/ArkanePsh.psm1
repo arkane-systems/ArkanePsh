@@ -1,3 +1,5 @@
+# Exported functions
+
 <#
  .Synopsis
  Gets the .NET runtime installation directory.
@@ -27,6 +29,9 @@ function Get-DotNetInstallDirectory
 		[System.IO.DirectoryInfo] $runtimePath
 	}
 }
+
+Export-ModuleMember -Function Get-DotNetInstallDirectory
+
 <#
 	.Synopsis
 	Gets the location of one of the Windows special folders.
@@ -64,6 +69,8 @@ function Get-SpecialFolder
 	}
 }
 
+Export-ModuleMember -Function Get-SpecialFolder
+
 <#
  .Synopsis
  Does nothing.
@@ -96,3 +103,14 @@ function Get-SpecialFolder
 		Write-Error -Category NotEnabled 'Doing nothing and failing.'
 	}
  }
+
+ Export-ModuleMember -Function Invoke-Nothing
+
+ # System cmdlet aliases
+
+ New-Alias dd Push-Location -Description 'Adds the current location to the top of a location stack.' -Scope Global -Force
+ New-Alias du Pop-Location -Description 'Changes the current location to the location most recently pushed onto the stack.' -Scope Global -Force
+ New-Alias jobs Get-Job -Description 'Gets Windows PowerShell background jobs that are running in the current session.' -Scope Global -Force
+ New-Alias new New-Object -Description 'Creates an instance of a Microsoft .NET Framework or COM object.' -Scope Global -Force
+
+ Export-ModuleMember -Alias dd,du,jobs,new
