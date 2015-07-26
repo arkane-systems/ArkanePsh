@@ -2,6 +2,81 @@
 
 <#
  .Synopsis
+ Edits the current user's host profile.
+
+ .Description
+ Launches the default editor on the PowerShell profile for the current user on the current host.
+
+ .Example
+ edit-hostprofile
+ #>
+
+function Edit-HostProfile
+{
+	Start-Process -FilePath (Get-ApplicationPath ps1) -ArgumentList $profile
+}
+
+Export-ModuleMember -Function Edit-HostProfile
+
+<#
+ .Synopsis
+ Edits the current user's profile.
+
+ .Description
+ Launches the default editor on the PowerShell profile for the current user on any host.
+
+ .Example
+ edit-profile
+ #>
+
+function Edit-Profile
+{
+	Start-Process -FilePath (Get-ApplicationPath ps1) -ArgumentList $profile.CurrentUserAllHosts
+}
+
+Export-ModuleMember -Function Edit-Profile
+
+<#
+ .Synopsis
+ Get the application path for the given extension.
+
+ .Description
+ Returns the application path (default executable) for the given extension.
+
+ .Parameter Extension
+ The extension for which to return the application path (i.e., 'exe').
+
+ .Example
+ get-applicationpath docx
+ #>
+
+function Get-ApplicationPath
+{
+	[CmdletBinding()]
+	param
+	(
+		[string]$Extension
+	)
+
+	try
+	{
+		$default = (Get-ItemProperty -Path "HKLM:\Software\Classes\.$Extension" -Name '(Default)' -ErrorAction Stop).'(Default)'
+
+		(Get-ItemProperty "HKLM:\Software\Classes\$default\shell\open\command" -Name '(Default)' -ErrorAction Stop).'(Default)' -match '([^"^\s]+)\s*|"([^"]+)"\s*' | Out-Null
+		$path = $matches[0].ToString()
+
+		$path.Trim('"',' ')
+	}
+	catch
+	{
+		Write-Error "An application path was not found for the filetype '.$Extension'."
+	}
+}
+
+Export-ModuleMember -Function Get-ApplicationPath
+
+<#
+ .Synopsis
  Gets the .NET runtime installation directory.
 
  .Description
@@ -71,19 +146,18 @@ function Get-SpecialFolder
 
 Export-ModuleMember -Function Get-SpecialFolder
 
-<#
- .Synopsis
- Does nothing.
+ <#
+	.Synopsis
+	Does nothing.
 
- .Description
- Does nothing, either succeeding or failing.
+	.Description
+	Does nothing, either succeeding or failing.
 
- .Parameter Fail
- Fail to do nothing successfully.
+	.Parameter Fail
+	Fail to do nothing successfully.
 
- .Example
-	# Do nothing.
-	do-nothing
+	.Example
+	invoke-nothing
  #>
 
  function Invoke-Nothing
@@ -105,6 +179,42 @@ Export-ModuleMember -Function Get-SpecialFolder
  }
 
  Export-ModuleMember -Function Invoke-Nothing
+
+ <#
+	.Synopsis
+	Refreshes the current user's host profile.
+
+	.Description
+	Reloads the PowerShell profile for the current user on the current host.
+
+	.Example
+	refresh-hostprofile
+  #>
+
+function Refresh-HostProfile
+{
+	. $profile
+}
+
+ Export-ModuleMember -Function Refresh-HostProfile
+
+ <#
+	.Synopsis
+	Refreshes the current user's profile.
+
+	.Description
+	Reloads the PowerShell profile for the current user on any host.
+
+	.Example
+	refresh-profile
+  #>
+
+ function Refresh-Profile
+ {
+	 . $profile.CurrentUserAllHosts
+ }
+
+ Export-ModuleMember -Function Refresh-Profile
 
  # System cmdlet aliases
 
