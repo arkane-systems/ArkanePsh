@@ -37,7 +37,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ArkanePsh.Types.ps1xml" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="ArkanePsh.psd1" />
     <Compile Include="ArkanePsh.psm1" />

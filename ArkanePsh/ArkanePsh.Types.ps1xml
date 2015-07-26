@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+    <Type>
+        <Name>System.Int32</Name>
+        <Members>
+            <ScriptMethod>
+                <Name>ToRoman</Name>
+                 <Script>
+                    $num = $this
+
+                    $M = [math]::truncate($num / 1000)
+                    $num -= $M * 1000
+                    $D = [math]::truncate($num / 500)
+                    $num -=  $D * 500
+                    $C = [math]::truncate($num / 100)
+                    $num -=  $C * 100
+                    $L = [math]::truncate($num / 50)
+                    $num -=  $L * 50
+                    $X = [math]::truncate($num / 10)
+                    $num -=  $x * 10
+                    $V = [math]::truncate($num / 5)
+                    $num -=  $V * 5
+
+                    $Roman = "M" * $M
+                    $Roman += "D" * $D
+                    $Roman += "C" * $C
+                    $Roman += "L" * $L
+                    $Roman += "X" * $X
+                    $Roman += "V" * $V
+                    $Roman += "I" * $num
+
+                    $roman = $roman.replace('DCCCC','CM') # 900
+                    $roman = $roman.replace('CCCC','CD') # 400
+                    $roman = $roman.replace('LXXXX','XC') # 90
+                    $roman = $roman.replace('XXXX','XL') # 40
+                    $roman = $roman.replace('VIIII','IX') # 9
+                    $roman = $roman.replace('IIII','IV') # 4
+
+                    Return $roman
+                </Script>
+            </ScriptMethod>
+
+        </Members>
+    </Type>
+  <Type>
+    <Name>System.Management.ManagementObject#root\cimv2\Win32_ComputerSystem</Name>
+        <Members>
+          <ScriptProperty>
+               <Name>DomainRoleStr</Name>
+               <GetScriptBlock>
+switch ($this.DomainRole)
+{
+0  {"Standalone Workstation"}
+1  {"Member Workstation"}
+2  {"Standalone Server"}
+3  {"Member Server"}
+4  {"Backup Domain Controller"}
+5  {"Primary Domain Controller"}
+default {"Unknown"}
+}
+               </GetScriptBlock>
+          </ScriptProperty>
+        </Members>
+    </Type>
+</Types>
