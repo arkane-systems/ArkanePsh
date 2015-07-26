@@ -20,6 +20,9 @@ Set-ArkaneVariable windowsIdentity      ([System.Security.Principal.WindowsIdent
 Set-ArkaneVariable windowsPrincipal     (new-object System.Security.Principal.WindowsPrincipal $windowsIdentity)
 Set-ArkaneVariable isAdmin              ($windowsPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator))
 
+# This next is intended to be overriden in profile.
+Set-Variable workingFolder "C:\Working" -Scope Global -Option AllScope -Description "(Overridable) ArkanePsh module variable." -Force
+
 # Delete internal helper functions
 
 remove-item function:Set-ArkaneVariable
