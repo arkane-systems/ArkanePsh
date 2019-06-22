@@ -1,4 +1,4 @@
-#
+﻿#
 # InitVariables.ps1
 #
 
