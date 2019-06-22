@@ -81,14 +81,14 @@ Export-ModuleMember -Function Edit-Profile
     Saves the shell history to a CLIXML history file, which can be used by Import-History.
 
     .Parameter Path
-    The history file to save, defaulting to .history.tmp in the current user's documents folder.
+    The history file to save, defaulting to history.tmp in the current user's documents folder.
  #>
 
  function Export-History
  {
      param
      (
-         [string] $path = "${myDocuments}\.history.tmp"
+         [string] $path = "${myDocuments}\history.tmp"
      )
 
      Get-History -count $MaximumHistoryCount | Group-Object CommandLine | foreach {$_.Group[0]} | Export-Clixml $path
@@ -115,37 +115,37 @@ New-Alias now Get-CurrentTime -Description "Gets the current system time." -Scop
 
 Export-ModuleMember -Function Get-CurrentTime -Alias now
 
-<#
- .Synopsis
- Gets the .NET runtime installation directory.
+#<#
+# .Synopsis
+# Gets the .NET runtime installation directory.
 
- .Description
- Returns the directory where the common language runtime is installed.
+# .Description
+# Returns the directory where the common language runtime is installed.
 
- .Parameter AsInfo
- Returns a DirectoryInfo object rather than a path string.
- #>
+# .Parameter AsInfo
+# Returns a DirectoryInfo object rather than a path string.
+# #>
 
-function Get-DotNetInstallDirectory
-{
-    param
-    (
-        [switch]$AsInfo
-    )
+#function Get-DotNetInstallDirectory
+#{
+#    param
+#    (
+#        [switch]$AsInfo
+#    )
 
-    $runtimePath = [System.Runtime.InteropServices.RuntimeEnvironment]::GetRuntimeDirectory()
+#    $runtimePath = [System.Runtime.InteropServices.RuntimeEnvironment]::GetRuntimeDirectory()
 
-    if (-not $AsInfo)
-    {
-        $runtimePath
-    }
-    else
-    {
-        [System.IO.DirectoryInfo] $runtimePath
-    }
-}
+#    if (-not $AsInfo)
+#    {
+#        $runtimePath
+#    }
+#    else
+#    {
+#        [System.IO.DirectoryInfo] $runtimePath
+#    }
+#}
 
-Export-ModuleMember -Function Get-DotNetInstallDirectory
+#Export-ModuleMember -Function Get-DotNetInstallDirectory
 
 <#
     .Synopsis
@@ -230,14 +230,14 @@ Export-ModuleMember -Function Get-SpecialFolder
     Loads the shell history from a CLIXML history file, such as that produced by export-history.
 
     .Parameter Path
-    The history file to load, defaulting to .history.tmp in the current user's documents folder.
+    The history file to load, defaulting to history.tmp in the current user's documents folder.
  #>
 
  function Import-History
  {
      param
      (
-         [string] $path = "${myDocuments}\.history.tmp"
+         [string] $path = "${myDocuments}\history.tmp"
      )
 
      Import-Clixml $path | Add-History
@@ -247,65 +247,65 @@ Export-ModuleMember -Function Get-SpecialFolder
 
  Export-ModuleMember -Function Import-History -Alias lhy
 
-<#
-    .Synopsis
-    Invoke the assembly installation utility.
+#<#
+#    .Synopsis
+#    Invoke the assembly installation utility.
 
-    .Description
-    Invokes the assembly installation utility with arbitrary parameters.
-#>
+#    .Description
+#    Invokes the assembly installation utility with arbitrary parameters.
+##>
 
-function Install-Assembly
-{
-    . "$(Get-DotNetInstallDirectory)installutil.exe" $args $input
-}
+#function Install-Assembly
+#{
+#    . "$(Get-DotNetInstallDirectory)installutil.exe" $args $input
+#}
 
-Export-ModuleMember -Function Install-Assembly
+#Export-ModuleMember -Function Install-Assembly
 
-<#
-    .Synopsis
-    Invoke the Microsoft Build Engine.
+#<#
+#    .Synopsis
+#    Invoke the Microsoft Build Engine.
 
-    .Description
-    Invokes the Microsoft Build Engine with arbitrary parameters.
-#>
+#    .Description
+#    Invokes the Microsoft Build Engine with arbitrary parameters.
+##>
 
-function Invoke-BuildEngine
-{
-    . "$(Get-DotNetInstallDirectory)msbuild.exe" $args $input
-}
+#function Invoke-BuildEngine
+#{
+#    . "$(Get-DotNetInstallDirectory)msbuild.exe" $args $input
+#}
 
-Export-ModuleMember -Function Invoke-BuildEngine
+#Export-ModuleMember -Function Invoke-BuildEngine
 
-<#
-    .Synopsis
-    Invoke the C# compiler.
+#<#
+#    .Synopsis
+#    Invoke the C# compiler.
 
-    .Description
-    Invokes the C# compiler with arbitrary parameters.
-#>
-function Invoke-CSharpCompiler
-{
-    # needs updating to find Roslyn compiler
+#    .Description
+#    Invokes the C# compiler with arbitrary parameters.
+##>
+#function Invoke-CSharpCompiler
+#{
+#    # needs updating to find Roslyn compiler
 
-    . "$(Get-DotNetInstallDirectory)csc.exe" $args $input
-}
+#    . "$(Get-DotNetInstallDirectory)csc.exe" $args $input
+#}
 
-Export-ModuleMember -Function Invoke-CSharpCompiler
+#Export-ModuleMember -Function Invoke-CSharpCompiler
 
-<#
-    .Synopsis
-    Invoke the IL assembler.
+#<#
+#    .Synopsis
+#    Invoke the IL assembler.
 
-    .Description
-    Invokes the IL assembler with arbitrary parameters.
-#>
-function Invoke-IlAssembler
-{
-    . "$(Get-DotNetInstallDirectory)ilasm.exe" $args $input
-}
+#    .Description
+#    Invokes the IL assembler with arbitrary parameters.
+##>
+#function Invoke-IlAssembler
+#{
+#    . "$(Get-DotNetInstallDirectory)ilasm.exe" $args $input
+#}
 
-Export-ModuleMember -Function Invoke-IlAssembler
+#Export-ModuleMember -Function Invoke-IlAssembler
 
 <# 
     .Synopsis 
@@ -457,39 +457,39 @@ function Test-IsIseHost
 
 Export-ModuleMember -Function Test-IsISEHost
 
- <#
-    .Synopsis
-    Test whether the target computer is a laptop/tablet.
+ #<#
+ #   .Synopsis
+ #   Test whether the target computer is a laptop/tablet.
 
-    .Parameter Computer
-    The computer name of the computer to test.
- #>
+ #   .Parameter Computer
+ #   The computer name of the computer to test.
+ ##>
 
- function Test-IsLaptop
- {
-     param
-     (
-         [string]$computer = "localhost"
-     )
+ #function Test-IsLaptop
+ #{
+ #    param
+ #    (
+ #        [string]$computer = "localhost"
+ #    )
 
-     $isLaptop = $false
+ #    $isLaptop = $false
 
-     if (Get-WmiObject -Class win32_systemenclosure -ComputerName $computer | 
-         Where-Object { $_.chassistypes -eq 9 -or $_.chassistypes -eq 10 `
-         -or $_.chassistypes -eq 14})
-     {
-         $isLaptop = $true
-     }
+ #    if (Get-WmiObject -Class win32_systemenclosure -ComputerName $computer | 
+ #        Where-Object { $_.chassistypes -eq 9 -or $_.chassistypes -eq 10 `
+ #        -or $_.chassistypes -eq 14})
+ #    {
+ #        $isLaptop = $true
+ #    }
 
-     if (Get-WmiObject -Class win32_battery -ComputerName $computer) 
-     { 
-         $isLaptop = $true
-     }
+ #    if (Get-WmiObject -Class win32_battery -ComputerName $computer) 
+ #    { 
+ #        $isLaptop = $true
+ #    }
 
-     $isLaptop
- }
+ #    $isLaptop
+ #}
 
- Export-ModuleMember -Function Test-IsLaptop
+ #Export-ModuleMember -Function Test-IsLaptop
 
  <#
     .Synopsis
