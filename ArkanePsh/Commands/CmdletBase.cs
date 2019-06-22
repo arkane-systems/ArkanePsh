@@ -22,6 +22,8 @@ namespace ArkaneSystems.ArkanePsh.Commands
 {
     public abstract class CmdletBase : PSCmdlet, IDisposable
     {
+        #region Disposal
+
         /// <inheritdoc />
         public void Dispose ()
         {
@@ -45,6 +47,8 @@ namespace ArkaneSystems.ArkanePsh.Commands
         /// </param>
         protected virtual void Dispose (bool disposing) { }
 
+        #endregion
+
         #region Informational methods
 
         private string cmdletName ;
@@ -63,6 +67,8 @@ namespace ArkaneSystems.ArkanePsh.Commands
                 return this.cmdletName ;
             }
         }
+
+        protected static ArkanePshContext Context => ArkanePshContext.Instance ;
 
         #endregion
     }

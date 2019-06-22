@@ -106,7 +106,7 @@ function Set-LocationEx
         Set-StrictMode -Version Latest
 
         # String resources
-        Import-LocalizedData -BindingVariable msgTbl -FileName ArkanePsh.Cd.Messages
+        Import-LocalizedData -BindingVariable msgTbl -FileName ArkanePsh-Cd-Messages
 
         $ExtraArgs = @{}
         if (($PSVersionTable.PSVersion.Major -lt 6) -or ($PSVersionTable.PSEdition -eq 'Desktop'))
@@ -134,11 +134,11 @@ function Set-LocationEx
             else
             {
                 # If not passing thru, then check for user options of other info to display.
-                if ($ArkanePsh:Preferences['CD_GetChildItem'])
+                if ($Arkane:Preferences['CD_GetChildItem'])
                 {
                     Get-ChildItem
                 }
-                elseif ($ArkanePsh:Preferences['CD_EchoNewLocation'])
+                elseif ($Arkane:Preferences['CD_EchoNewLocation'])
                 {
                     Write-Host $ExecutionContext.SessionState.Path.CurrentLocation
                 }
