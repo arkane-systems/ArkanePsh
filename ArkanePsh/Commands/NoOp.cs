@@ -14,7 +14,10 @@
 #region using
 
 using System ;
+using System.ComponentModel ;
 using System.Management.Automation ;
+
+using ArkaneSystems.ArkanePsh.Annotations ;
 
 using JetBrains.Annotations ;
 
@@ -26,6 +29,8 @@ namespace ArkaneSystems.ArkanePsh.Commands
     ///     Implementation of invoke-nothing cmdlet. Does nothing.
     /// </summary>
     [Cmdlet (VerbsLifecycle.Invoke, ArkanePshNouns.Nothing)]
+    [Description ("Does nothing.")]
+    [DetailedDescription ("Does nothing, either succeeding or failing.")]
     public class NoOp : PSCmdlet
     {
         /// <summary>

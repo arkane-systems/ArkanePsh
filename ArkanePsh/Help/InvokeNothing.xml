@@ -1,20 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<Cmdlet FullName="ArkaneSystems.ArkanePsh.NoOp" >
-  
-  <Synopsis>
-    Does nothing.
-  </Synopsis>
+<?xml version='1.0'?>
 
+<Cmdlet FullName='ArkaneSystems.ArkanePsh.Commands.NoOp'>
   <Description>
-    Does nothing, either succeeding or failing.
+    Does nothing.
   </Description>
-  
+  <DetailedDescription>
+    Does nothing, either succeeding or failing.
+  </DetailedDescription>
   <Parameters>
-    <Parameter Name="Fail">
-      <Description>Fail to do nothing successfully.</Description>
+    <Parameter Name='InputObject'>
+      <Description>
+        Something to do nothing to.
+      </Description>
+      <DefaultValue>
+
+      </DefaultValue>
+    </Parameter>
+    <Parameter Name='Fail'>
+      <Description>
+        Fail at doing nothing.
+      </Description>
+      <DefaultValue>
+
+      </DefaultValue>
     </Parameter>
   </Parameters>
-  
+
   <InputTypes>
     <InputType>
       <Name>System.Object</Name>
@@ -23,32 +34,35 @@
       </Description>
     </InputType>
   </InputTypes>
-  
+
   <ReturnTypes>
     <ReturnType>
-      <Name>None or System.Object</Name>
+      <Name>Nothing, or System.Object.</Name>
       <Description>
-        <p>The input object(s) passed through unchanged.</p>
+        <p>The input object, unchanged.</p>
       </Description>
     </ReturnType>
   </ReturnTypes>
 
   <Examples>
     <Example Number="1">
-      <Code>
-        Invoke-Nothing
-      </Code>
+      <Code>Invoke-Nothing</Code>
       <Remarks>
-        Does nothing, successfully.
+        <p>Do nothing and succeed.</p>
       </Remarks>
     </Example>
-    <Example Number="1">
-      <Code>
-        Invoke-Nothing -Fail
-      </Code>
+    <Example Number="2">
+      <Code>Invoke-Nothing -Fail</Code>
       <Remarks>
-        Tries to do nothing and fails.
+        <p>Do nothing and fail.</p>
       </Remarks>
     </Example>
   </Examples>
+
+  <Notes>
+    <Note>
+      <p></p>
+    </Note>
+  </Notes>
+
 </Cmdlet>
