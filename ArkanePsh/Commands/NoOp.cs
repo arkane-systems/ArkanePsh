@@ -13,6 +13,7 @@
 
 #region using
 
+using System ;
 using System.Management.Automation ;
 
 using JetBrains.Annotations ;
@@ -37,9 +38,20 @@ namespace ArkaneSystems.ArkanePsh.Commands
         [UsedImplicitly]
         public object InputObject { get ; set ; }
 
+        [Parameter (HelpMessage = "Fail at nothing.")]
+        public SwitchParameter Fail { get ; set ; } = false ;
+
         /// <inheritdoc />
         protected override void EndProcessing ()
         {
+            if (this.Fail)
+                this.ThrowTerminatingError (new ErrorRecord (new InvalidOperationException ("Doing nothing and failing."),
+                                                             "FailNaught",
+                                                             ErrorCategory.NotEnabled,
+                                                             this.InputObject)) ;
+
+            this.WriteVerbose ("Doing nothing and succeeding.") ;
+
             this.WriteObject (this.InputObject) ;
             base.EndProcessing () ;
         }
