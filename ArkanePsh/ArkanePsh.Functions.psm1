@@ -88,7 +88,7 @@ Export-ModuleMember -Function Edit-Profile
  {
      param
      (
-         [string] $path = "${myDocuments}\history.tmp"
+         [string] $path = "$Arkane:MyDocuments\history.tmp"
      )
 
      Get-History -count $MaximumHistoryCount | Group-Object CommandLine | foreach {$_.Group[0]} | Export-Clixml $path
@@ -237,7 +237,7 @@ Export-ModuleMember -Function Get-SpecialFolder
  {
      param
      (
-         [string] $path = "${myDocuments}\history.tmp"
+         [string] $path = "$Arkane:MyDocuments\history.tmp"
      )
 
      Import-Clixml $path | Add-History
@@ -428,7 +428,7 @@ Export-ModuleMember Out-TempFile
 
  function Test-Is64Bit
  {
-     [System.Environment]::Is64BitProcess
+     return $Arkane:Is64BitProcess
  }
 
  Export-ModuleMember -Function Test-Is64Bit

@@ -30,7 +30,9 @@ namespace ArkaneSystems.ArkanePsh
     {
         public string ArkanePshHome { get ; } = Path.GetDirectoryName (typeof (ArkanePshContext).Assembly.Location) ;
 
-        public bool Is64BitProcess { get ; } = IntPtr.Size == 8 ;
+        public string MyDocuments { get ; } = System.Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments) ;
+
+        public bool Is64BitProcess { get ; } = System.Environment.Is64BitProcess ;
 
         public bool IsAdmin => this.WindowsPrincipal.IsInRole (WindowsBuiltInRole.Administrator) ;
 
