@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Cmdlet FullName="ArkaneSystems.ArkanePsh.NoOp" >
+  
+  <Synopsis>
+    Does nothing.
+  </Synopsis>
+
+  <Description>
+    Does nothing, either succeeding or failing.
+  </Description>
+  
+  <Parameters>
+    <Parameter Name="Fail">
+      <Description>Fail to do nothing successfully.</Description>
+    </Parameter>
+  </Parameters>
+  
+  <InputTypes>
+    <InputType>
+      <Name>System.Object</Name>
+      <Description>
+        <p>Any object.</p>
+      </Description>
+    </InputType>
+  </InputTypes>
+  
+  <ReturnTypes>
+    <ReturnType>
+      <Name>None or System.Object</Name>
+      <Description>
+        <p>The input object(s) passed through unchanged.</p>
+      </Description>
+    </ReturnType>
+  </ReturnTypes>
+
+  <Examples>
+    <Example Number="1">
+      <Code>
+        Invoke-Nothing
+      </Code>
+      <Remarks>
+        Does nothing, successfully.
+      </Remarks>
+    </Example>
+    <Example Number="1">
+      <Code>
+        Invoke-Nothing -Fail
+      </Code>
+      <Remarks>
+        Tries to do nothing and fails.
+      </Remarks>
+    </Example>
+  </Examples>
+</Cmdlet>
