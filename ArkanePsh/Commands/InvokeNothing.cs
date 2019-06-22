@@ -31,7 +31,7 @@ namespace ArkaneSystems.ArkanePsh.Commands
     [Cmdlet (VerbsLifecycle.Invoke, ArkanePshNouns.Nothing)]
     [Description ("Does nothing.")]
     [DetailedDescription ("Does nothing, either succeeding or failing.")]
-    public class InvokeNothing : PSCmdlet
+    public class InvokeNothing : CmdletBase
     {
         /// <summary>
         ///     Input object to the cmdlet.

@@ -27,7 +27,7 @@ namespace ArkaneSystems.ArkanePsh.Annotations
     {
         public RelatedLinkAttribute ([NotNull] Type cmdletType)
         {
-            var attr = (CmdletAttribute) GetCustomAttribute (cmdletType, typeof (CmdletAttribute)) ;
+            var attr = (CmdletAttribute) Attribute.GetCustomAttribute (cmdletType, typeof (CmdletAttribute)) ;
         
             if (attr == null)
                 throw new ArgumentException ($"The type {cmdletType} is not a cmdlet.") ;
