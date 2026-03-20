@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <AssemblyName>ArkanePsh</AssemblyName>
+    <RootNamespace>ArkanePsh</RootNamespace>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Version>0.1.0</Version>
+    <Authors>Alistair J. R. Young</Authors>
+    <Company>Arkane Systems</Company>
+    <Description>Compiled cmdlets for ArkanePsh module</Description>
+    <PublishDir>../ArkanePsh/bin</PublishDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- PowerShell SDK for cmdlet development -->
+    <PackageReference Include="System.Management.Automation" Version="7.4.0" />
+  </ItemGroup>
+
+  <!-- Post-build: copy PowerShell 7.4-compatible binary as module assembly -->
+  <Target Name="CopyToModule" AfterTargets="Build">
+    <ItemGroup>
+      <CompatibleOutput Include="$(ProjectDir)bin\$(Configuration)\net8.0\$(AssemblyName).dll" Condition="Exists('$(ProjectDir)bin\$(Configuration)\net8.0\$(AssemblyName).dll')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(CompatibleOutput)" DestinationFiles="$(ProjectDir)../ArkanePsh/bin/$(AssemblyName).dll" Condition="@(CompatibleOutput) != ''" />
+  </Target>
+
+</Project>
+
