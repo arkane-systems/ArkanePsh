@@ -8,19 +8,16 @@
 - `ArkanePsh/ArkanePsh.psm1` - Core module implementation (~583 lines, all exported functions)
 - `ArkanePsh/ArkanePsh.Types.ps1xml` - Custom type extensions (e.g., `.ToRoman()` on Int32)
 - `ArkanePsh/InitVariables.ps1` - Module-level variable initialization (profile helpers, admin detection)
+- `ArkanePsh/ArkanePsh.slnx` - Solution file for the project (use this instead of creating a new .sln file)
 
 ## Architecture Patterns
 
 ### Module Exports Pattern
-Every function follows this template:
-```powershell
-function Verb-Noun { 
+Every function follows this template:function Verb-Noun { 
     param([param_types]$paramNames)
     # implementation
 }
-Export-ModuleMember -Function Verb-Noun [[-Alias shortName]]
-```
-- All functions are **explicitly exported** (no implicit exports)
+Export-ModuleMember -Function Verb-Noun [[-Alias shortName]]- All functions are **explicitly exported** (no implicit exports)
 - Functions follow **Verb-Noun naming** from PowerShell cmdlet conventions
 - Single-letter aliases common: `now` → `Get-CurrentTime`, `up` → `Set-LocationUp`, `shy`/`lhy` → history functions
 - **New functions MUST be exported**, else they won't be visible to module consumers
@@ -35,30 +32,22 @@ Initialized in `InitVariables.ps1`, read-only with `AllScope`:
 These are **global scope, read-only, AllScope**—they persist across reloads.
 
 ### Type Extensions Pattern
-`ArkanePsh.Types.ps1xml` extends built-in types with custom methods:
-```xml
-<Type><Name>System.Int32</Name><Members>
-  <ScriptMethod><Name>ToRoman</Name><Script>...</Script></ScriptMethod>
-</Type>
-```
-This allows `(42).ToRoman()` syntax. **When adding methods, update the `.ps1xml` file**, not code comments.
+`ArkanePsh.Types.ps1xml` extends built-in types with custom methods:<Type>
+  <Name>System.Int32</Name>
+  <Members>
+    <ScriptMethod>
+      <Name>ToRoman</Name>
+      <Script>...</Script>
+    </ScriptMethod>
+  </Members>
+</Type>This allows `(42).ToRoman()` syntax. **When adding methods, update the `.ps1xml` file**, not code comments.
 
 ## Critical Workflows & Development Commands
 
 ### Testing the Module
-```powershell
-# Load the module into current session
-Import-Module .\ArkanePsh\ArkanePsh.psd1 -Force
-
-# Verify exports
-Get-Module ArkanePsh | Select -ExpandProperty ExportedFunctions
-
-# Test a single function
-Test-IsLaptop
+- Load the module into current session: Import-Module .\ArkanePsh\ArkanePsh.psd1 -Force- Verify exports: Get-Module ArkanePsh | Select -ExpandProperty ExportedFunctions- Test a single function: Test-IsLaptop
 Get-CurrentTime
 Edit-HostProfile
-```
-
 ### Adding New Functions
 1. Add function to `ArkanePsh.psm1` with full comment-based help (`.Synopsis`, `.Description`, `.Parameter`, `.Example`)
 2. Call `Export-ModuleMember -Function FunctionName [-Alias shortName]` immediately after
@@ -114,6 +103,10 @@ Extending built-in types allows elegant syntax (`(42).ToRoman()`) and keeps doma
 - **Registry access**: `Get-ApplicationPath` reads from HKLM; requires appropriate permissions
 - **Profile integration**: Functions like `Edit-Profile` rely on `$profile` automatic variables
 - **.NET runtime**: Helper functions invoke .NET tools (csc.exe, msbuild.exe, ilasm.exe) from runtime directory
+
+## Unified Module Outcome
+- Merge existing `ArkanePsh.pssproj` script functionality with new `ArkanePsh.Cmdlets` functionality.
+- Migrate legacy functionality into `ArkanePsh.Cmdlets` to ensure a cohesive module experience.
 
 ---
 
