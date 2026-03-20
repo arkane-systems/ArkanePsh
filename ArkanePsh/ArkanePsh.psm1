@@ -1,5 +1,7 @@
 # Exported functions
 
+Export-ModuleMember -Cmdlet Get-CompiledCmdletInfo,Get-CurrentTime,Get-DotNetInstallDirectory,Test-Is64Bit
+
 <#
  .Synopsis
  Edits the current user's host profile.
@@ -101,58 +103,18 @@ function Get-ApplicationPath
 
 Export-ModuleMember -Function Get-ApplicationPath
 
-<#
-	.Synopsis
-	Gets the current system time.
-
-	.Description
-	Returns the current system time as a System.DateTime.
-#>
-
-function Get-CurrentTime
-{
-	[DateTime]::Now
-}
-
 New-Alias now Get-CurrentTime -Description "Gets the current system time." -Scope Global -Force
 
-Export-ModuleMember -Function Get-CurrentTime -Alias now
+Export-ModuleMember -Alias now
 
-<#
- .Synopsis
- Gets the .NET runtime installation directory.
-
- .Description
- Returns the directory where the common language runtime is installed.
-
- .Parameter AsInfo
- Returns a DirectoryInfo object rather than a path string.
- #>
-
-function Get-DotNetInstallDirectory
+function Get-DotNetRuntimeDirectory
 {
-	param
-	(
-		[switch]$AsInfo
-	)
-
-	$runtimePath = [System.Runtime.InteropServices.RuntimeEnvironment]::GetRuntimeDirectory()
-
-	if (-not $AsInfo)
-	{
-		$runtimePath
-	}
-	else
-	{
-		[System.IO.DirectoryInfo] $runtimePath
-	}
+    [System.Runtime.InteropServices.RuntimeEnvironment]::GetRuntimeDirectory()
 }
 
-Export-ModuleMember -Function Get-DotNetInstallDirectory
-
 <#
-	.Synopsis
-	Gets a list of all assemblies loaded into the current PowerShell session.
+    .Synopsis
+    Gets a list of all assemblies loaded into the current PowerShell session.
 
 	.Description
 	Returns a list of all assemblies loaded into the current PowerShell session.
@@ -260,7 +222,7 @@ Export-ModuleMember -Function Get-SpecialFolder
 
 function Install-Assembly
 {
-    . "$(Get-DotNetInstallDirectory)installutil.exe" $args $input
+    . "$(Get-DotNetRuntimeDirectory)installutil.exe" $args $input
 }
 
 Export-ModuleMember -Function Install-Assembly
@@ -275,7 +237,7 @@ Export-ModuleMember -Function Install-Assembly
 
 function Invoke-BuildEngine
 {
-    . "$(Get-DotNetInstallDirectory)msbuild.exe" $args $input
+    . "$(Get-DotNetRuntimeDirectory)msbuild.exe" $args $input
 }
 
 Export-ModuleMember -Function Invoke-BuildEngine
@@ -291,7 +253,7 @@ function Invoke-CSharpCompiler
 {
 	# needs updating to find Roslyn compiler
 
-    . "$(Get-DotNetInstallDirectory)csc.exe" $args $input
+    . "$(Get-DotNetRuntimeDirectory)csc.exe" $args $input
 }
 
 Export-ModuleMember -Function Invoke-CSharpCompiler
@@ -305,7 +267,7 @@ Export-ModuleMember -Function Invoke-CSharpCompiler
 #>
 function Invoke-IlAssembler
 {
-    . "$(Get-DotNetInstallDirectory)ilasm.exe" $args $input
+    . "$(Get-DotNetRuntimeDirectory)ilasm.exe" $args $input
 }
 
 Export-ModuleMember -Function Invoke-IlAssembler
@@ -458,21 +420,9 @@ Export-ModuleMember Out-TempFile
 
  Export-ModuleMember -Function Set-LocationUp -Alias up
 
- <#
-	.Synopsis
-	Determines if you are running in a 64 bit process.
- #>
-
- function Test-Is64Bit
- {
-	 [System.Environment]::Is64BitProcess
- }
-
- Export-ModuleMember -Function Test-Is64Bit
-
 <#
-	.Synopsis
-	Determines if you are running in the Windows PowerShell ISE
+    .Synopsis
+    Determines if you are running in the Windows PowerShell ISE
  
 	.Description
 	This function determines if you are running in the Windows Powershell
@@ -772,3 +722,6 @@ function Set-LocationWorking
 New-Alias go-working Set-LocationWorking -Description "Set current location to the local working folder." -Scope Global -Force
 
 Export-ModuleMember -Function Set-LocationWorking -Alias go-working
+
+
+
