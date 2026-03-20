@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>ArkanePsh.Cmdlets</AssemblyName>
+    <RootNamespace>ArkanePsh.Cmdlets</RootNamespace>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Version>0.1.0</Version>
+    <Authors>Alistair J. R. Young</Authors>
+    <Company>Arkane Systems</Company>
+    <Description>Compiled cmdlets for ArkanePsh module</Description>
+    <PublishDir>../ArkanePsh/bin</PublishDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- PowerShell SDK for cmdlet development -->
+    <PackageReference Include="System.Management.Automation" Version="7.4.0" />
+  </ItemGroup>
+
+  <!-- Post-build: Copy assembly to module folder for both x86 and x64 -->
+  <Target Name="CopyToModule" AfterTargets="Build">
+    <ItemGroup>
+      <BinaryOutput Include="$(TargetDir)$(TargetFileName)" />
+    </ItemGroup>
+    <Copy SourceFiles="@(BinaryOutput)" DestinationFolder="$(ProjectDir)../ArkanePsh/bin" />
+  </Target>
+
+</Project>

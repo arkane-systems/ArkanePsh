@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="ArkanePsh/ArkanePsh.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="6cafc0c6-a428-4d30-a9f9-700e829fea51" />
+  <Project Path="ArkanePsh.Cmdlets/ArkanePsh.Cmdlets.csproj" Type="9a19103f-16f7-4668-be54-9a1e7a4f7b6d" Id="a1b2c3d4-e5f6-47a8-b9c0-d1e2f3a4b5c6" />
 </Solution>
