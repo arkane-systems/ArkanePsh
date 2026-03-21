@@ -15,10 +15,11 @@ namespace ArkaneSystems.PowerShell.Commands.Profile
       try
       {
         // Use PowerShell's $profile variable for the current host
-        var profilePath = this.SessionState.PSVariable.GetValue("profile") as string;
+        var profile = this.SessionState.PSVariable.GetValue("profile") as PSObject;
+        var profilePath = profile?.Properties["CurrentUserCurrentHost"]?.Value as string;
         if (string.IsNullOrEmpty (profilePath))
         {
-          this.ThrowTerminatingError ("Could not determine the current host profile path.", "ProfilePathNotFound");
+          this.ThrowTerminatingError ("Could not determine the current user's host profile path.", "ProfilePathNotFound");
           return;
         }
         // Use the default editor for .ps1 files

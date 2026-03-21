@@ -15,8 +15,8 @@ namespace ArkaneSystems.PowerShell.Commands.Profile
       try
       {
         // Use PowerShell's $profile.CurrentUserAllHosts variable
-        var profileAllHosts = this.SessionState.PSVariable.GetValue("profile") as PSObject;
-        var allHostsPath = profileAllHosts?.Properties["CurrentUserAllHosts"]?.Value as string;
+        var profile = this.SessionState.PSVariable.GetValue("profile") as PSObject;
+        var allHostsPath = profile?.Properties["CurrentUserAllHosts"]?.Value as string;
         if (string.IsNullOrEmpty (allHostsPath))
         {
           this.ThrowTerminatingError ("Could not determine the current user's all-hosts profile path.", "ProfileAllHostsPathNotFound");
