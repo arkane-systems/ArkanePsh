@@ -6,14 +6,13 @@
 ### Key Files
 - `ArkanePsh/ArkanePsh.csproj` - C# project file targeting .NET 10
 - `ArkanePsh/ArkanePshCmdlet.cs` - Base class for all compiled cmdlets
-- `ArkanePsh/GetCompiledCmdletInfoCmdlet.cs` (and other cmdlets) - Example/actual cmdlet implementations
 - `ArkanePsh/README.md` - Module documentation
 - `ArkanePsh/bin/ArkanePsh.dll` - Compiled module binary
 
 ## Architecture Patterns
 
 ### Cmdlet Pattern
-Each cmdlet is implemented as a C# class inheriting from `ArkanePshCmdlet` (which itself inherits from `PSCmdlet`).
+Each cmdlet is implemented as a C# class inheriting from `CmdletBase` (which itself inherits from `PSCmdlet`).
 - Use `[Cmdlet]` and `[OutputType]` attributes for PowerShell integration
 - Implement `ProcessRecord()` (and optionally `BeginProcessing()`/`EndProcessing()`)
 - Use base class helpers for error handling and debug output
@@ -28,8 +27,8 @@ Each cmdlet is implemented as a C# class inheriting from `ArkanePshCmdlet` (whic
 ## Critical Workflows & Development Commands
 
 ### Adding New Cmdlets
-1. Add a new `.cs` file in `ArkanePsh/`
-2. Inherit from `ArkanePshCmdlet`
+1. Add a new `.cs` file in the appropriate `ArkanePsh/Commands` subfolder
+2. Inherit from `CmdletBase`
 3. Decorate with `[Cmdlet]` and `[OutputType]` attributes
 4. Implement `ProcessRecord()`
 5. Use base class methods for error handling and debug output

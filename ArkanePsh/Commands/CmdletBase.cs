@@ -62,19 +62,21 @@ namespace ArkaneSystems.PowerShell.Commands
 
     #region Information
 
-    private string cmdletName ;
+    private string? cmdletName ;
     public string CmdletName
     {
       get
       {
         if (this.cmdletName == null)
         {
-          var cmdletAttr = (CmdletAttribute) Attribute.GetCustomAttribute (this.GetType (), typeof (CmdletAttribute)) ;
+          // All subclasses must have a CmdletAttribute, so this should never be null.
+          // If it is, we'll get a NullReferenceException, which is fine because it indicates a programming error.
+          var cmdletAttr = (CmdletAttribute) Attribute.GetCustomAttribute (this.GetType (), typeof (CmdletAttribute))! ;
           if (cmdletAttr != null)
             this.cmdletName = cmdletAttr.VerbName + "-" + cmdletAttr.NounName;
         }
 
-        return this.cmdletName;
+        return this.cmdletName!;
       }
     }
 

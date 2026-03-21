@@ -1,9 +1,7 @@
-using ArkaneSystems.PowerShell;
-using ArkaneSystems.PowerShell.Commands;
 using System.Diagnostics;
 using System.Management.Automation;
 
-namespace ArkanePsh.Commands.Profile
+namespace ArkaneSystems.PowerShell.Commands.Profile
 {
   /// <summary>
   /// Opens the current user's host profile in the default editor.
@@ -30,7 +28,7 @@ namespace ArkanePsh.Commands.Profile
           Arguments = profilePath,
           UseShellExecute = true
         };
-        Process.Start (psi);
+        _ = Process.Start (psi);
       }
       catch (System.Exception ex)
       {

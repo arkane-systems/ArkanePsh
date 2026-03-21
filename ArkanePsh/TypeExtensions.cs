@@ -35,6 +35,7 @@ namespace ArkaneSystems.PowerShell
           remaining -= item.Value;
         }
       }
+
       return result;
     }
   }
