@@ -60,6 +60,26 @@ namespace ArkaneSystems.PowerShell.Commands
 
     #endregion Error and debug message helpers
 
+    #region Information
+
+    private string cmdletName ;
+    public string CmdletName
+    {
+      get
+      {
+        if (this.cmdletName == null)
+        {
+          var cmdletAttr = (CmdletAttribute) Attribute.GetCustomAttribute (this.GetType (), typeof (CmdletAttribute)) ;
+          if (cmdletAttr != null)
+            this.cmdletName = cmdletAttr.VerbName + "-" + cmdletAttr.NounName;
+        }
+
+        return this.cmdletName;
+      }
+    }
+
+    #endregion Information
+
     #region Disposal
 
     /// <summary>
