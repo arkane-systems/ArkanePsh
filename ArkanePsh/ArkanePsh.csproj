@@ -4,7 +4,7 @@
   <PropertyGroup>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>ArkanePsh</AssemblyName>
-    <RootNamespace>ArkanePsh</RootNamespace>
+    <RootNamespace>ArkaneSystems.PowerShell</RootNamespace>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
