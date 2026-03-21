@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using Microsoft.Win32;
 using System.Security.Principal;
 
 namespace ArkaneSystems.PowerShell
@@ -19,5 +21,30 @@ namespace ArkaneSystems.PowerShell
 
     // Working folder can be overridden by environment variable or config in the future
     public static string WorkingFolder { get; set; } = "C:\\Working";
+
+    /// <summary>
+    /// Gets the default application path for a given file extension (e.g., "ps1").
+    /// </summary>
+    public static string GetApplicationPath(string extension)
+    {
+        if (string.IsNullOrWhiteSpace(extension))
+            throw new ArgumentException("Extension must be provided.", nameof(extension));
+        if (!extension.StartsWith("."))
+            extension = "." + extension;
+        using var extKey = Registry.ClassesRoot.OpenSubKey(extension);
+        var defaultValue = extKey?.GetValue(null) as string;
+        if (string.IsNullOrEmpty(defaultValue))
+            throw new InvalidOperationException($"No application registered for extension '{extension}'.");
+        using var commandKey = Registry.ClassesRoot.OpenSubKey($"{defaultValue}\\shell\\open\\command");
+        var command = commandKey?.GetValue(null) as string;
+        if (string.IsNullOrEmpty(command))
+            throw new InvalidOperationException($"No open command found for extension '{extension}'.");
+        // Extract the executable path (handles quoted and unquoted)
+        var parts = command.Trim().Split(' ');
+        var exePath = parts[0].Trim('"');
+        if (!File.Exists(exePath))
+            throw new FileNotFoundException($"Application not found: {exePath}");
+        return exePath;
+    }
   }
 }
