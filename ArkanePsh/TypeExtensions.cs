@@ -43,7 +43,7 @@ namespace ArkaneSystems.PowerShell
   {
     public static string GetDomainRoleStr (this ManagementObject obj)
     {
-      if (obj == null || !obj.Properties.Contains ("DomainRole"))
+      if (obj == null || obj.Properties["DomainRole"] == null)
         return "Unknown";
       int role = Convert.ToInt32(obj["DomainRole"]);
       return role switch
