@@ -1,13 +1,12 @@
 # ArkanePsh Copilot Instructions
 
 ## Project Overview
-**ArkanePsh** is a compiled PowerShell module implemented in C# (.NET 10), providing cmdlets for Windows system administration and development workflows. This is a **compiled PowerShell Module** project (not script-based, not hybrid), distributed as a binary module (DLL) for import into PowerShell 7+.
+**ArkanePsh** is a compiled PowerShell module implemented in C# (.NET 10), distributed as a binary module (DLL) for import into PowerShell 7+, providing cmdlets for Windows system administration and development workflows.
 
 ### Key Files
 - `ArkanePsh/ArkanePsh.csproj` - C# project file targeting .NET 10
-- `ArkanePsh/ArkanePshCmdlet.cs` - Base class for all compiled cmdlets
+- `ArkanePsh/CmdletBase.cs` - Base class for all compiled cmdlets
 - `ArkanePsh/README.md` - Module documentation
-- `ArkanePsh/bin/ArkanePsh.dll` - Compiled module binary
 
 ## Architecture Patterns
 
@@ -21,8 +20,8 @@ Each cmdlet is implemented as a C# class inheriting from `CmdletBase` (which its
 
 ### Building and Loading
 - Build with Visual Studio or `dotnet build ArkanePsh/ArkanePsh.csproj -c Release`
-- The compiled DLL is output to `ArkanePsh/bin/`
-- Import into PowerShell with `Import-Module ./ArkanePsh/bin/ArkanePsh.dll`
+- The compiled DLL is output to `ArkanePsh/bin/Release/net10.0`
+- Import into PowerShell with `Import-Module ./ArkanePsh/bin/Release/net10.0/ArkanePsh.dll`
 
 ## Critical Workflows & Development Commands
 
@@ -34,7 +33,7 @@ Each cmdlet is implemented as a C# class inheriting from `CmdletBase` (which its
 5. Use base class methods for error handling and debug output
 
 ### Testing the Module
-- Import the compiled DLL into PowerShell: `Import-Module ./ArkanePsh/bin/ArkanePsh.dll -Force`
+- Import the compiled DLL into PowerShell: `Import-Module ./ArkanePsh/bin/Release/net10.0/ArkanePsh.dll`
 - List available cmdlets: `Get-Command -Module ArkanePsh`
 - Run and test individual cmdlets as needed
 
@@ -54,7 +53,6 @@ Each cmdlet is implemented as a C# class inheriting from `CmdletBase` (which its
 
 ## Integration Points
 - **No script-based module logic**: All logic is in compiled C#
-- **No external dependencies except System.Management.Automation**
 - **Targeting .NET 10 and PowerShell 7+**
 
 ---

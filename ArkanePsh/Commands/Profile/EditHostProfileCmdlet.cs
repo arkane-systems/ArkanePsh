@@ -1,40 +1,37 @@
-using System.Diagnostics;
-using System.Management.Automation;
-
 namespace ArkaneSystems.PowerShell.Commands.Profile
 {
-  /// <summary>
-  /// Opens the current user's host profile in the default editor.
-  /// </summary>
-  [Cmdlet (VerbsData.Edit, ArkanePshNouns.HostProfile)]
-  [OutputType (typeof (void))]
-  public class EditHostProfileCmdlet : CmdletBase
-  {
-    protected override void ProcessRecord ()
-    {
-      try
-      {
-        // Use PowerShell's $profile variable for the current host
-        var profile = this.SessionState.PSVariable.GetValue("profile") as PSObject;
-        var profilePath = profile?.Properties["CurrentUserCurrentHost"]?.Value as string;
-        if (string.IsNullOrEmpty (profilePath))
-        {
-          this.ThrowTerminatingError ("Could not determine the current user's host profile path.", "ProfilePathNotFound");
-          return;
-        }
-        // Use the default editor for .ps1 files
-        var psi = new ProcessStartInfo
-        {
-          FileName = ModuleEnvironment.GetApplicationPath("ps1"),
-          Arguments = profilePath,
-          UseShellExecute = true
-        };
-        _ = Process.Start (psi);
-      }
-      catch (System.Exception ex)
-      {
-        this.WriteErrorMessage ($"Failed to open host profile: {ex.Message}", "EditHostProfileFailed");
-      }
-    }
-  }
+  ///// <summary>
+  ///// Opens the current user's host profile in the default editor.
+  ///// </summary>
+  //[Cmdlet (VerbsData.Edit, ArkanePshNouns.HostProfile)]
+  //[OutputType (typeof (void))]
+  //public class EditHostProfileCmdlet : CmdletBase
+  //{
+  //  protected override void ProcessRecord ()
+  //  {
+  //    try
+  //    {
+  //      // Use PowerShell's $profile variable for the current host
+  //      var profile = this.SessionState.PSVariable.GetValue("profile") as PSObject;
+  //      var profilePath = profile?.Properties["CurrentUserCurrentHost"]?.Value as string;
+  //      if (string.IsNullOrEmpty (profilePath))
+  //      {
+  //        this.ThrowTerminatingError ("Could not determine the current user's host profile path.", "ProfilePathNotFound");
+  //        return;
+  //      }
+  //      // Use the default editor for .ps1 files
+  //      var psi = new ProcessStartInfo
+  //      {
+  //        FileName = ModuleEnvironment.GetApplicationPath("ps1"),
+  //        Arguments = profilePath,
+  //        UseShellExecute = true
+  //      };
+  //      _ = Process.Start (psi);
+  //    }
+  //    catch (System.Exception ex)
+  //    {
+  //      this.WriteErrorMessage ($"Failed to open host profile: {ex.Message}", "EditHostProfileFailed");
+  //    }
+  //  }
+  //}
 }
