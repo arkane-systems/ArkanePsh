@@ -27,6 +27,8 @@ public class ModuleInitializer : IModuleAssemblyInitializer
           .AddParameter ("Value", version)
           .MakeGlobalConstant ()
           .Invoke ();
+
+        ps.Commands.Clear ();
       }
     }
     catch (Exception ex)
